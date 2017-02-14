@@ -25,4 +25,8 @@
     <string name="incall_dnd_dialog_message">Чтобы включить режим \"Не беспокоить\", приложению Телефон необходимо разрешение на управление статусом режима \"Не беспокоить\".\nПожалуйста, предоставьте его.</string>
     <string name="allow">Разрешить</string>
     <string name="deny">Отказать</string>
+
+    <!-- Smart Options -->
+    <string name="smart_mute_title">Отключение звука</string>
+    <string name="smart_mute_summary">Отключать звук входящего вызова переворотом устройства</string>
 </resources>

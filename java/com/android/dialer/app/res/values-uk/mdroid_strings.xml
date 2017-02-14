@@ -25,4 +25,8 @@
     <string name="incall_dnd_dialog_message">Щоб увімкнути режим «Не турбувати», додатку Телефон необхіден дозвіл на керування статусом режиму «Не турбувати».\nБудь ласка, надайте його.</string>
     <string name="allow">Дозволити</string>
     <string name="deny">Відмовити</string>
+
+    <!-- Smart Options -->
+    <string name="smart_mute_title">Вимкнення звуку</string>
+    <string name="smart_mute_summary">Вимикати звук вхідного виклику переворотом пристрою</string>
 </resources>
