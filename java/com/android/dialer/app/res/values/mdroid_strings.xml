@@ -44,4 +44,9 @@
 
     <string name="auto_call_recording_title">Auto call recording</string>
     <string name="auto_call_recording_key" translatable="false">auto_call_recording</string>
+
+    <string name="type_incoming_volte">Incoming 4G voice call</string>
+    <string name="type_outgoing_volte">Outgoing 4G voice call</string>
+    <string name="type_missed_volte">Missed 4G voice call</string>
+
 </resources>
