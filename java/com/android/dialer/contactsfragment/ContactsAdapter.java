@@ -46,19 +46,23 @@ final class ContactsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
   private final ArrayMap<ContactViewHolder, Integer> holderMap = new ArrayMap<>();
   private final Context context;
-  private final Cursor cursor;
 
   // List of contact sublist headers
-  private final String[] headers;
-
+  private String[] headers = new String[0];
   // Number of contacts that correspond to each header in {@code headers}.
-  private final int[] counts;
+  private int[] counts = new int[0];
+  // Cursor with list of contacts
+  private Cursor cursor;
 
-  ContactsAdapter(Context context, Cursor cursor) {
+  ContactsAdapter(Context context) {
     this.context = context;
+  }
+
+  void updateCursor(Cursor cursor) {
     this.cursor = cursor;
     headers = cursor.getExtras().getStringArray(Contacts.EXTRA_ADDRESS_BOOK_INDEX_TITLES);
     counts = cursor.getExtras().getIntArray(Contacts.EXTRA_ADDRESS_BOOK_INDEX_COUNTS);
+    notifyDataSetChanged();
   }
 
   @Override

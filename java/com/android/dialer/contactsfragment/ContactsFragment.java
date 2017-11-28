@@ -16,8 +16,13 @@
 
 package com.android.dialer.contactsfragment;
 
+import static android.Manifest.permission.READ_CONTACTS;
+
 import android.app.Fragment;
 import android.app.LoaderManager.LoaderCallbacks;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
 import android.content.Loader;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -55,6 +60,18 @@ public class ContactsFragment extends Fragment
 
   public static final int READ_CONTACTS_PERMISSION_REQUEST_CODE = 1;
 
+  /**
+   * Listen to broadcast events about permissions in order to be notified if the READ_CONTACTS
+   * permission is granted via the UI in another fragment.
+   */
+  private final BroadcastReceiver readContactsPermissionGrantedReceiver =
+      new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+          getLoaderManager().initLoader(0, null, ContactsFragment.this);
+        }
+      };
+
   private FastScroller fastScroller;
   private TextView anchoredHeader;
   private RecyclerView recyclerView;
@@ -79,6 +96,23 @@ public class ContactsFragment extends Fragment
     fastScroller = view.findViewById(R.id.fast_scroller);
     anchoredHeader = view.findViewById(R.id.header);
     recyclerView = view.findViewById(R.id.recycler_view);
+    adapter = new ContactsAdapter(getContext());
+    recyclerView.setAdapter(adapter);
+    manager =
+        new LinearLayoutManager(getContext()) {
+          @Override
+          public void onLayoutChildren(Recycler recycler, State state) {
+            super.onLayoutChildren(recycler, state);
+            int itemsShown = findLastVisibleItemPosition() - findFirstVisibleItemPosition() + 1;
+            if (adapter.getItemCount() > itemsShown) {
+              fastScroller.setVisibility(View.VISIBLE);
+              recyclerView.setOnScrollChangeListener(ContactsFragment.this);
+            } else {
+              fastScroller.setVisibility(View.GONE);
+            }
+          }
+        };
+    recyclerView.setLayoutManager(manager);
 
     emptyContentView = view.findViewById(R.id.empty_list_view);
     emptyContentView.setImage(R.drawable.empty_contacts);
@@ -118,6 +152,7 @@ public class ContactsFragment extends Fragment
 
   @Override
   public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
+    LogUtil.enterBlock("ContactsFragment.onLoadFinished");
     if (cursor.getCount() == 0) {
       emptyContentView.setDescription(R.string.all_contacts_empty);
       emptyContentView.setActionLabel(R.string.all_contacts_empty_add_contact_action);
@@ -126,24 +161,8 @@ public class ContactsFragment extends Fragment
     } else {
       emptyContentView.setVisibility(View.GONE);
       recyclerView.setVisibility(View.VISIBLE);
-      adapter = new ContactsAdapter(getContext(), cursor);
-      manager =
-          new LinearLayoutManager(getContext()) {
-            @Override
-            public void onLayoutChildren(Recycler recycler, State state) {
-              super.onLayoutChildren(recycler, state);
-              int itemsShown = findLastVisibleItemPosition() - findFirstVisibleItemPosition() + 1;
-              if (adapter.getItemCount() > itemsShown) {
-                fastScroller.setVisibility(View.VISIBLE);
-                recyclerView.setOnScrollChangeListener(ContactsFragment.this);
-              } else {
-                fastScroller.setVisibility(View.GONE);
-              }
-            }
-          };
+      adapter.updateCursor(cursor);
 
-      recyclerView.setLayoutManager(manager);
-      recyclerView.setAdapter(adapter);
       PerformanceReport.logOnScrollStateChange(recyclerView);
       fastScroller.setup(adapter, manager);
     }
@@ -236,5 +255,19 @@ public class ContactsFragment extends Fragment
         getLoaderManager().initLoader(0, null, this);
       }
     }
+  }
+
+  @Override
+  public void onStart() {
+    super.onStart();
+    PermissionsUtil.registerPermissionReceiver(
+        getActivity(), readContactsPermissionGrantedReceiver, READ_CONTACTS);
+  }
+
+  @Override
+  public void onStop() {
+    PermissionsUtil.unregisterPermissionReceiver(
+        getActivity(), readContactsPermissionGrantedReceiver);
+    super.onStop();
   }
 }
