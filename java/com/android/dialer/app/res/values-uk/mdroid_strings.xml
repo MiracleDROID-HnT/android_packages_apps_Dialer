@@ -67,4 +67,10 @@
 
     <string name="prox_auto_answer_incall_only_title">Автоматична відповідь</string>
     <string name="prox_auto_answer_incall_only_summary">Автовідповідь на вхідний дзвінок з використанням датчика наближення</string>
+
+    <string name="auto_answer_call_title">Автовідповідь з гарнітурою</string>
+    <string name="auto_answer_call_summary">Автовідповідь на дзвінок з підключеною дротовою або бездротовою гарнітурою</string>
+    <string name="auto_answer_delay_title">Затримка автовідповіді</string>
+    <string name="auto_answer_dialog_title">Затримка автовідповіді в (мс)</string>
+    <string name="auto_answer_delay_summary">Автовідповідь буде увімкнено через <xliff:g id="number">%d</xliff:g> мс</string>
 </resources>
