@@ -64,4 +64,7 @@
     <string name="prox_auto_speaker_incall_only_title">Тільки під час вхідного виклику</string>
     <string name="prox_auto_speaker_incall_only_summary_on">При вихідних дзвінках функція активується тільки після відповіді на виклик</string>
     <string name="prox_auto_speaker_incall_only_summary_off">Функція активна при будь-яких викликах (за замовчуванням)</string>
+
+    <string name="prox_auto_answer_incall_only_title">Автоматична відповідь</string>
+    <string name="prox_auto_answer_incall_only_summary">Автовідповідь на вхідний дзвінок з використанням датчика наближення</string>
 </resources>
