@@ -49,4 +49,8 @@
     <string name="max_brightness_on_incoming_call_disabled">Отключено</string>
     <string name="max_brightness_on_incoming_call_not_dnd">Только тогда, когда не в режиме \"Не беспокоить\"</string>
     <string name="max_brightness_on_incoming_call_always">Всегда</string>
+
+    <string name="disable_proximity_sensor_title">Отключить датчик приближения</string>
+    <string name="disable_proximity_sensor_summary">Не отключать сенсорную панель и экран по датчику приближения во время вызова</string>
+    <string name="sensor_settings_titile">Сенсоры</string>
 </resources>

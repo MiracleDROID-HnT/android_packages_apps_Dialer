@@ -65,4 +65,8 @@
     <string name="max_brightness_on_incoming_call_disabled">Disabled</string>
     <string name="max_brightness_on_incoming_call_not_dnd">Only when not in Do not disturb mode</string>
     <string name="max_brightness_on_incoming_call_always">Always</string>
+
+    <string name="disable_proximity_sensor_title">Disable proximity sensor</string>
+    <string name="disable_proximity_sensor_summary">Do not turn off touchscreen and display in call based on proximity sensor</string>
+    <string name="sensor_settings_titile">Sensors</string>
 </resources>

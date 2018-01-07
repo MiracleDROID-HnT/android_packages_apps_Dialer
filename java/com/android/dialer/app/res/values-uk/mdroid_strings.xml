@@ -49,4 +49,8 @@
     <string name="max_brightness_on_incoming_call_disabled">Вимкнено</string>
     <string name="max_brightness_on_incoming_call_not_dnd">Лише тоді, коли не в режимі «Не турбувати»</string>
     <string name="max_brightness_on_incoming_call_always">Завжди</string>
+
+    <string name="disable_proximity_sensor_title">Вимкнути датчик наближення</string>
+    <string name="disable_proximity_sensor_summary">Не вимикати сенсорну панель і екран по датчику наближення під час виклику</string>
+    <string name="sensor_settings_titile">Сенсори</string>
 </resources>
