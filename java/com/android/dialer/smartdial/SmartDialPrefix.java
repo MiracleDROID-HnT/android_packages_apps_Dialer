@@ -88,8 +88,10 @@ public class SmartDialPrefix {
 
     /** Sets a layout for SmartDial depending on current UI language.*/
     String locale = context.getResources().getConfiguration().locale.getCountry();
-    if (locale.equals("RU") || locale.equals("UA")) {
+    if (locale.equals("RU")) {
         mMap = new RussianSmartDialMap();
+    } else if (locale.equals("UA")) {
+        mMap = new UkrainianSmartDialMap();
     } else {
         mMap = new LatinSmartDialMap();
     }
@@ -576,6 +578,7 @@ public class SmartDialPrefix {
     result.add("TC"); // Turks and Caicos Islands
     result.add("VI"); // U.S. Virgin Islands
     result.add("RU"); // Russia
+    result.add("UA"); // Ukraine
     return result;
   }
 
