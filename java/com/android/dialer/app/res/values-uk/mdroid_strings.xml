@@ -20,4 +20,9 @@
     <string name="fullscreen_caller_photo_title">Повноекранне фото</string>
     <string name="fullscreen_caller_photo_summary">Відображати повноекранне фото у вхідних та вихідних викликах</string>
     <string name="fullscreen_caller_photo_message">Для застосування необхідно перезапустити додаток</string>
+
+    <string name="incall_enable_dnd_title">Вмикати режим «Не турбувати» під час викликів</string>
+    <string name="incall_dnd_dialog_message">Щоб увімкнути режим «Не турбувати», додатку Телефон необхіден дозвіл на керування статусом режиму «Не турбувати».\nБудь ласка, надайте його.</string>
+    <string name="allow">Дозволити</string>
+    <string name="deny">Відмовити</string>
 </resources>

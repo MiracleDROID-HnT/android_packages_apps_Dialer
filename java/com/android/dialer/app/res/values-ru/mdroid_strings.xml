@@ -20,4 +20,9 @@
     <string name="fullscreen_caller_photo_title">Полноэкранное фото</string>
     <string name="fullscreen_caller_photo_summary">Отображать полноэкранное фото во входящих и исходящих звонках</string>
     <string name="fullscreen_caller_photo_message">Для применения необходимо перезапустить приложение</string>
+
+    <string name="incall_enable_dnd_title">Включать режим \"Не беспокоить\" во время вызовов</string>
+    <string name="incall_dnd_dialog_message">Чтобы включить режим \"Не беспокоить\", приложению Телефон необходимо разрешение на управление статусом режима \"Не беспокоить\".\nПожалуйста, предоставьте его.</string>
+    <string name="allow">Разрешить</string>
+    <string name="deny">Отказать</string>
 </resources>
