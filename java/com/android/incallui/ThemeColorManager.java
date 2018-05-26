@@ -17,13 +17,20 @@
 package com.android.incallui;
 
 import android.content.Context;
+import android.content.om.IOverlayManager;
+import android.content.om.OverlayInfo;
 import android.graphics.Color;
+import android.os.RemoteException;
+import android.os.ServiceManager;
+import android.os.UserHandle;
 import android.support.annotation.ColorInt;
 import android.support.annotation.Nullable;
 import android.support.v4.graphics.ColorUtils;
 import android.telecom.PhoneAccount;
 import android.telecom.PhoneAccountHandle;
 import android.telecom.TelecomManager;
+import android.util.TypedValue;
+
 import com.android.contacts.common.util.MaterialColorMapUtils;
 import com.android.contacts.common.util.MaterialColorMapUtils.MaterialPalette;
 import com.android.incallui.call.DialerCall;
@@ -40,6 +47,8 @@ public class ThemeColorManager {
   @ColorInt private int backgroundColorMiddle;
   @ColorInt private int backgroundColorBottom;
   @ColorInt private int backgroundColorSolid;
+
+  private IOverlayManager mOverlayManager;
 
   /**
    * If there is no actual call currently in the call list, this will be used as a fallback to
@@ -64,34 +73,45 @@ public class ThemeColorManager {
   }
 
   private void updateThemeColors(
-      Context context, @Nullable PhoneAccountHandle handle, boolean isSpam) {
-    MaterialPalette palette;
-    if (isSpam) {
-      palette =
-          colorMap.calculatePrimaryAndSecondaryColor(R.color.incall_call_spam_background_color);
-      backgroundColorTop = context.getColor(R.color.incall_background_gradient_spam_top);
-      backgroundColorMiddle = context.getColor(R.color.incall_background_gradient_spam_middle);
-      backgroundColorBottom = context.getColor(R.color.incall_background_gradient_spam_bottom);
-      backgroundColorSolid = context.getColor(R.color.incall_background_multiwindow_spam);
-    } else {
-      @ColorInt int highlightColor = getHighlightColor(context, handle);
-      palette = colorMap.calculatePrimaryAndSecondaryColor(highlightColor);
-      backgroundColorTop = context.getColor(R.color.incall_background_gradient_top);
-      backgroundColorMiddle = context.getColor(R.color.incall_background_gradient_middle);
-      backgroundColorBottom = context.getColor(R.color.incall_background_gradient_bottom);
-      backgroundColorSolid = context.getColor(R.color.incall_background_multiwindow);
-      if (highlightColor != PhoneAccount.NO_HIGHLIGHT_COLOR) {
-        // The default background gradient has a subtle alpha. We grab that alpha and apply it to
-        // the phone account color.
-        backgroundColorTop = applyAlpha(palette.mPrimaryColor, backgroundColorTop);
-        backgroundColorMiddle = applyAlpha(palette.mPrimaryColor, backgroundColorMiddle);
-        backgroundColorBottom = applyAlpha(palette.mPrimaryColor, backgroundColorBottom);
-        backgroundColorSolid = applyAlpha(palette.mPrimaryColor, backgroundColorSolid);
-      }
-    }
+          Context context, @Nullable PhoneAccountHandle handle, boolean isSpam) {
 
-    primaryColor = palette.mPrimaryColor;
-    secondaryColor = palette.mSecondaryColor;
+      TypedValue value = new TypedValue();
+      context.getTheme().resolveAttribute(android.R.attr.colorAccent, value, true);
+      int accentColor = context.getColor(value.resourceId);
+
+      mOverlayManager = IOverlayManager.Stub.asInterface(ServiceManager.getService(context.OVERLAY_SERVICE));
+
+      MaterialPalette palette;
+
+      if (isSpam) {
+          palette = colorMap.calculatePrimaryAndSecondaryColor(R.color.incall_call_spam_background_color);
+          backgroundColorTop = context.getColor(R.color.incall_background_gradient_spam_top);
+          backgroundColorMiddle = context.getColor(R.color.incall_background_gradient_spam_middle);
+          backgroundColorBottom = context.getColor(R.color.incall_background_gradient_spam_bottom);
+          backgroundColorSolid = context.getColor(R.color.incall_background_multiwindow_spam);
+      } else if (!hasExternalThemeApplied(context)) {
+          backgroundColorTop = isUsingWhiteAccent() ? getColorWithAlpha(Color.BLACK, 1.0f) : getColorWithAlpha(accentColor, 1.0f);
+          backgroundColorMiddle = isUsingWhiteAccent() ? getColorWithAlpha(Color.BLACK, 0.9f) : getColorWithAlpha(accentColor, 0.9f);
+          backgroundColorBottom = isUsingWhiteAccent() ? getColorWithAlpha(Color.BLACK, 0.7f) : getColorWithAlpha(accentColor, 0.7f);
+          backgroundColorSolid = isUsingWhiteAccent() ? getColorWithAlpha(Color.BLACK, 1.0f) : getColorWithAlpha(accentColor, 1.0f);
+      } else {
+          @ColorInt int highlightColor = getHighlightColor(context, handle);
+          palette = colorMap.calculatePrimaryAndSecondaryColor(highlightColor);
+          backgroundColorTop = context.getColor(R.color.incall_background_gradient_top);
+          backgroundColorMiddle = context.getColor(R.color.incall_background_gradient_middle);
+          backgroundColorBottom = context.getColor(R.color.incall_background_gradient_bottom);
+          backgroundColorSolid = context.getColor(R.color.incall_background_multiwindow);
+          if (highlightColor != PhoneAccount.NO_HIGHLIGHT_COLOR) {
+              // The default background gradient has a subtle alpha. We grab that alpha and apply it to
+              // the phone account color.
+              backgroundColorTop = applyAlpha(palette.mPrimaryColor, backgroundColorTop);
+              backgroundColorMiddle = applyAlpha(palette.mPrimaryColor, backgroundColorMiddle);
+              backgroundColorBottom = applyAlpha(palette.mPrimaryColor, backgroundColorBottom);
+              backgroundColorSolid = applyAlpha(palette.mPrimaryColor, backgroundColorSolid);
+          }
+          primaryColor = palette.mPrimaryColor;
+          secondaryColor = palette.mSecondaryColor;
+      }
   }
 
   @ColorInt
@@ -138,5 +158,33 @@ public class ThemeColorManager {
   @ColorInt
   private static int applyAlpha(@ColorInt int color, @ColorInt int sourceColorWithAlpha) {
     return ColorUtils.setAlphaComponent(color, Color.alpha(sourceColorWithAlpha));
+  }
+
+  // Set an alpha for colors
+  private static int getColorWithAlpha(int color, float ratio) {
+      int newColor = 0;
+      int alpha = Math.round(Color.alpha(color) * ratio);
+      int r = Color.red(color);
+      int g = Color.green(color);
+      int b = Color.blue(color);
+      newColor = Color.argb(alpha, r, g, b);
+      return newColor;
+  }
+
+  // Check for white accent
+  private boolean isUsingWhiteAccent() {
+      OverlayInfo themeInfo = null;
+      try {
+          themeInfo = mOverlayManager.getOverlayInfo("mx.mdroid.accent.white",
+                  UserHandle.USER_CURRENT);
+      } catch (RemoteException e) {
+          e.printStackTrace();
+      }
+      return themeInfo != null && themeInfo.isEnabled();
+  }
+
+  // Check to see if an external theme is applied (because we're so anti-theme :p)
+  private static boolean hasExternalThemeApplied(Context context) {
+      return context.getResources().getBoolean(R.bool.config_has_theme_applied);
   }
 }
