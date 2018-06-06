@@ -54,8 +54,6 @@
   <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT"/>
   <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
   <uses-permission android:name="android.permission.BROADCAST_STICKY"/>
-  <uses-permission android:name="android.permission.INTERACT_ACROSS_USERS"/>
-  <uses-permission android:name="android.permission.INTERACT_ACROSS_USERS_FULL"/>
   <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
   <uses-permission android:name="android.permission.SEND_SMS"/>
   <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
@@ -73,6 +71,9 @@
    presses home. -->
   <uses-permission android:name="android.permission.STOP_APP_SWITCHES"/>
   <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+
+  <!-- Use this to modify theme accent for light or dark ui -->
+  <uses-permission android:name="android.permission.READ_OVERLAYS"/>
 
   <!-- Permissions needed for badger count showing on launch icon. -->
 
