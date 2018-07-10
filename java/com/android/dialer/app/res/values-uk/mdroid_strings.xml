@@ -37,4 +37,6 @@
 
     <string name="call_recording_category_title">Запис виклику</string>
     <string name="call_recording_format">Формат аудіо</string>
+
+    <string name="auto_call_recording_title">Автозапис розмови</string>
 </resources>
