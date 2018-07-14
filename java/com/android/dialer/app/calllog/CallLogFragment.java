@@ -203,6 +203,7 @@ public class CallLogFragment extends Fragment
   public void onCreate(Bundle state) {
     LogUtil.d("CallLogFragment.onCreate", toString());
     super.onCreate(state);
+    setRetainInstance(true);
     mRefreshDataRequired = true;
     if (state != null) {
       mCallTypeFilter = state.getInt(KEY_FILTER_TYPE, mCallTypeFilter);
