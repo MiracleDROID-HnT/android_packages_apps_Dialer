@@ -356,7 +356,9 @@ public class CallButtonPresenter
   private void startCallRecordingOrAskForPermission() {
     if (hasAllPermissions(CallRecorder.REQUIRED_PERMISSIONS)) {
       CallRecorder recorder = CallRecorder.getInstance();
-      recorder.startRecording(mCall.getNumber(), mCall.getCreationTimeMillis());
+      if (mCall != null) {
+        recorder.startRecording(mCall.getNumber(), mCall.getCreationTimeMillis());
+      }
     } else {
       mInCallButtonUi.requestCallRecordingPermissions(CallRecorder.REQUIRED_PERMISSIONS);
     }
