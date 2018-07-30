@@ -111,6 +111,11 @@ public class CallButtonPresenter
 
     CallRecorder recorder = CallRecorder.getInstance();
     recorder.addRecordingProgressListener(mRecordingProgressListener);
+    if(recorder.isRecording()){
+      mInCallButtonUi.setCallRecordingState(true);
+    } else {
+      mInCallButtonUi.setCallRecordingState(false);
+    }
 
     // Update the buttons state immediately for the current call
     onStateChange(InCallState.NO_CALLS, inCallPresenter.getInCallState(), CallList.getInstance());
