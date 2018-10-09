@@ -24,4 +24,10 @@
         android:summary="@string/fullscreen_caller_photo_summary"
         android:defaultValue="false" />
 
+    <SwitchPreference
+        android:key="incallui_background_color"
+        android:title="@string/incallui_background_color_title"
+        android:summary="@string/incallui_background_color_summary"
+        android:defaultValue="false" />
+
 </PreferenceScreen>

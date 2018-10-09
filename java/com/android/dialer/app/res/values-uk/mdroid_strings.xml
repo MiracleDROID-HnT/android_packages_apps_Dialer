@@ -16,7 +16,7 @@
 -->
 
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-	<string name="other_settings_label">Інші налаштування</string>
+    <string name="other_settings_label">Інші налаштування</string>
     <string name="fullscreen_caller_photo_title">Повноекранне фото</string>
     <string name="fullscreen_caller_photo_summary">Відображати повноекранне фото у вхідних та вихідних викликах</string>
     <string name="fullscreen_caller_photo_message">Для застосування необхідно перезапустити додаток</string>
@@ -39,4 +39,7 @@
     <string name="call_recording_format">Формат аудіо</string>
 
     <string name="auto_call_recording_title">Автозапис розмови</string>
+
+    <string name="incallui_background_color_title">Колір фону інтерфесу виклику</string>
+    <string name="incallui_background_color_summary">Використовувати колір системного акценту для фону інтерфесу виклику</string>
 </resources>

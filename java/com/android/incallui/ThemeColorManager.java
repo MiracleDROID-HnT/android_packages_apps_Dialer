@@ -19,10 +19,12 @@ package com.android.incallui;
 import android.content.Context;
 import android.content.om.IOverlayManager;
 import android.content.om.OverlayInfo;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.RemoteException;
 import android.os.ServiceManager;
 import android.os.UserHandle;
+import android.preference.PreferenceManager;
 import android.support.annotation.ColorInt;
 import android.support.annotation.Nullable;
 import android.support.v4.graphics.ColorUtils;
@@ -49,6 +51,8 @@ public class ThemeColorManager {
   @ColorInt private int backgroundColorSolid;
 
   private IOverlayManager mOverlayManager;
+
+  private boolean isInCallUIColor = false;
 
   /**
    * If there is no actual call currently in the call list, this will be used as a fallback to
@@ -83,13 +87,16 @@ public class ThemeColorManager {
 
       MaterialPalette palette;
 
+      SharedPreferences mPrefs = PreferenceManager.getDefaultSharedPreferences(context);
+      isInCallUIColor = mPrefs.getBoolean("incallui_background_color", false);
+
       if (isSpam) {
           palette = colorMap.calculatePrimaryAndSecondaryColor(R.color.incall_call_spam_background_color);
           backgroundColorTop = context.getColor(R.color.incall_background_gradient_spam_top);
           backgroundColorMiddle = context.getColor(R.color.incall_background_gradient_spam_middle);
           backgroundColorBottom = context.getColor(R.color.incall_background_gradient_spam_bottom);
           backgroundColorSolid = context.getColor(R.color.incall_background_multiwindow_spam);
-      } else if (!hasExternalThemeApplied(context)) {
+      } else if (!hasExternalThemeApplied(context) && isInCallUIColor) {
           backgroundColorTop = isUsingWhiteAccent() ? getColorWithAlpha(Color.BLACK, 1.0f) : getColorWithAlpha(accentColor, 1.0f);
           backgroundColorMiddle = isUsingWhiteAccent() ? getColorWithAlpha(Color.BLACK, 0.9f) : getColorWithAlpha(accentColor, 0.9f);
           backgroundColorBottom = isUsingWhiteAccent() ? getColorWithAlpha(Color.BLACK, 0.7f) : getColorWithAlpha(accentColor, 0.7f);

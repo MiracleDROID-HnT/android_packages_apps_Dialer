@@ -16,7 +16,7 @@
 -->
 
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-	<string name="other_settings_label">Other settings</string>
+    <string name="other_settings_label">Other settings</string>
     <string name="fullscreen_caller_photo_title">Fullscreen photo</string>
     <string name="fullscreen_caller_photo_summary">Display full-screen photo in incoming and outgoing calls</string>
     <string name="fullscreen_caller_photo_message">To use, you must restart the application</string>
@@ -54,4 +54,6 @@
     <string name="call_log_show_all_slots">All SIMs</string>
     <string name="call_log_all_calls_header">All calls</string>
 
+    <string name="incallui_background_color_title">InCallUI background color</string>
+    <string name="incallui_background_color_summary">Use system accent color for InCallUI background</string>
 </resources>
