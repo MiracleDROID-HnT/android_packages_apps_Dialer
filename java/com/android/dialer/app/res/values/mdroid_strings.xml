@@ -54,6 +54,9 @@
     <string name="call_log_show_all_slots">All SIMs</string>
     <string name="call_log_all_calls_header">All calls</string>
 
-    <string name="incallui_background_color_title">InCallUI background color</string>
-    <string name="incallui_background_color_summary">Use system accent color for InCallUI background</string>
+    <string name="incallui_background_color_mode">InCallUI background color</string>
+    <string name="incallui_background_color_mode_key" translatable="false">incallui_background_color_mode</string>
+    <string name="default_incallui_background_color">Default</string>
+    <string name="accent_incallui_background_color">Accent</string>
+    <string name="transparent_incallui_background_color">Transparent</string>
 </resources>

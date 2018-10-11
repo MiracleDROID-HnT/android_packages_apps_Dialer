@@ -40,6 +40,8 @@
 
     <string name="auto_call_recording_title">Автозапись разговора</string>
 
-    <string name="incallui_background_color_title">Цвет фона интерфейса вызова</string>
-    <string name="incallui_background_color_summary">Использовать цвет системного акцента для фона интерфейса вызова</string>
+    <string name="incallui_background_color_mode">Цвет фона интерфейса вызова</string>
+    <string name="default_incallui_background_color">По умолчанию</string>
+    <string name="accent_incallui_background_color">Акцент</string>
+    <string name="transparent_incallui_background_color">Прозрачный</string>
 </resources>

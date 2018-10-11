@@ -52,8 +52,6 @@ public class ThemeColorManager {
 
   private IOverlayManager mOverlayManager;
 
-  private boolean isInCallUIColor = false;
-
   /**
    * If there is no actual call currently in the call list, this will be used as a fallback to
    * determine the theme color for InCallUI.
@@ -76,6 +74,20 @@ public class ThemeColorManager {
     }
   }
 
+  private int getInCallUIColorMode(Context context) {
+    final String prefName = context.getPackageName() + "_preferences";
+    final SharedPreferences prefs = context.getSharedPreferences(prefName, context.MODE_MULTI_PROCESS);
+    try {
+      String value = prefs.getString(context.getString(R.string.incallui_background_color_mode_key), null);
+      if (value != null) {
+        return Integer.parseInt(value);
+      }
+    } catch (NumberFormatException e) {
+      // ignore and fall through
+    }
+    return 0;
+  }
+
   private void updateThemeColors(
           Context context, @Nullable PhoneAccountHandle handle, boolean isSpam) {
 
@@ -87,20 +99,22 @@ public class ThemeColorManager {
 
       MaterialPalette palette;
 
-      SharedPreferences mPrefs = PreferenceManager.getDefaultSharedPreferences(context);
-      isInCallUIColor = mPrefs.getBoolean("incallui_background_color", false);
-
       if (isSpam) {
           palette = colorMap.calculatePrimaryAndSecondaryColor(R.color.incall_call_spam_background_color);
           backgroundColorTop = context.getColor(R.color.incall_background_gradient_spam_top);
           backgroundColorMiddle = context.getColor(R.color.incall_background_gradient_spam_middle);
           backgroundColorBottom = context.getColor(R.color.incall_background_gradient_spam_bottom);
           backgroundColorSolid = context.getColor(R.color.incall_background_multiwindow_spam);
-      } else if (!hasExternalThemeApplied(context) && isInCallUIColor) {
+      } else if (!hasExternalThemeApplied(context) && (getInCallUIColorMode(context) == 1)) {
           backgroundColorTop = isUsingWhiteAccent() ? getColorWithAlpha(Color.BLACK, 1.0f) : getColorWithAlpha(accentColor, 1.0f);
           backgroundColorMiddle = isUsingWhiteAccent() ? getColorWithAlpha(Color.BLACK, 0.9f) : getColorWithAlpha(accentColor, 0.9f);
           backgroundColorBottom = isUsingWhiteAccent() ? getColorWithAlpha(Color.BLACK, 0.7f) : getColorWithAlpha(accentColor, 0.7f);
           backgroundColorSolid = isUsingWhiteAccent() ? getColorWithAlpha(Color.BLACK, 1.0f) : getColorWithAlpha(accentColor, 1.0f);
+      } else if (!hasExternalThemeApplied(context) && (getInCallUIColorMode(context) == 2)) {
+          backgroundColorTop = context.getColor(android.R.color.transparent);
+          backgroundColorMiddle = context.getColor(android.R.color.transparent);
+          backgroundColorBottom = context.getColor(android.R.color.transparent);
+          backgroundColorSolid = context.getColor(android.R.color.transparent);
       } else {
           @ColorInt int highlightColor = getHighlightColor(context, handle);
           palette = colorMap.calculatePrimaryAndSecondaryColor(highlightColor);
