@@ -77,6 +77,11 @@
     <item name="dialpad_style">@style/Dialpad.Light</item>
   </style>
 
+  <style name="CustomPopupTheme" parent="Widget.AppCompat.PopupMenu">
+    <item name="android:colorBackground">@color/searchbox_background_color</item>
+    <item name="android:textColor">@color/searchbox_text_color</item>
+  </style>
+
   <!-- Action bar overflow menu icon.  White with no shadow. -->
   <style name="DialtactsActionBarOverflowWhite"
     parent="@android:style/Widget.Material.Light.ActionButton.Overflow">

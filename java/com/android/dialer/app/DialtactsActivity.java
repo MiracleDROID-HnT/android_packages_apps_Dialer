@@ -46,6 +46,7 @@ import android.telecom.PhoneAccount;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.view.ContextThemeWrapper;
 import android.view.DragEvent;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -1008,7 +1009,8 @@ public class DialtactsActivity extends TransactionSafeActivity
   }
 
   protected OptionsPopupMenu buildOptionsMenu(View invoker) {
-    final OptionsPopupMenu popupMenu = new OptionsPopupMenu(this, invoker);
+    Context wrapper = new ContextThemeWrapper(this, R.style.CustomPopupTheme);
+    final OptionsPopupMenu popupMenu = new OptionsPopupMenu(wrapper, invoker);
     popupMenu.inflate(R.menu.dialtacts_options);
     popupMenu.setOnMenuItemClickListener(this);
     return popupMenu;
