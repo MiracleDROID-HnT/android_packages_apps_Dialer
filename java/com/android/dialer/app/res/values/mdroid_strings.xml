@@ -59,4 +59,10 @@
     <string name="default_incallui_background_color">Default</string>
     <string name="accent_incallui_background_color">Accent</string>
     <string name="transparent_incallui_background_color">Transparent</string>
+
+    <string name="max_brightness_on_incoming_call_mode">Maximum brightness for incoming calls</string>
+    <string name="max_brightness_on_incoming_call_mode_key" translatable="false">max_brightness_on_incoming_call_mode_key</string>
+    <string name="max_brightness_on_incoming_call_disabled">Disabled</string>
+    <string name="max_brightness_on_incoming_call_not_dnd">Only when not in Do not disturb mode</string>
+    <string name="max_brightness_on_incoming_call_always">Always</string>
 </resources>

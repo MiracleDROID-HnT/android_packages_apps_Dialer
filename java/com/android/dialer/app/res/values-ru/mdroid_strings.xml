@@ -44,4 +44,9 @@
     <string name="default_incallui_background_color">По умолчанию</string>
     <string name="accent_incallui_background_color">Акцент</string>
     <string name="transparent_incallui_background_color">Прозрачный</string>
+
+    <string name="max_brightness_on_incoming_call_mode">Максимальная яркость для входящих вызовов</string>
+    <string name="max_brightness_on_incoming_call_disabled">Отключено</string>
+    <string name="max_brightness_on_incoming_call_not_dnd">Только тогда, когда не в режиме \"Не беспокоить\"</string>
+    <string name="max_brightness_on_incoming_call_always">Всегда</string>
 </resources>

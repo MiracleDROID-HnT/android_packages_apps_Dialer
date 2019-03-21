@@ -22,6 +22,7 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.content.SharedPreferences;
@@ -46,6 +47,7 @@ import android.view.View.AccessibilityDelegate;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
+import android.view.WindowManager;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
 import android.view.accessibility.AccessibilityNodeInfo.AccessibilityAction;
@@ -157,6 +159,10 @@ public class AnswerFragment extends Fragment
   private VideoCallScreen answerVideoCallScreen;
   private Handler handler = new Handler(Looper.getMainLooper());
   private boolean isFullscreenPhoto = false;
+
+  private NotificationManager mNotificationManager;
+  private int mDndMode;
+  private boolean shouldSetMaxBrightness;
 
   private enum SecondaryBehavior {
     REJECT_WITH_SMS(
@@ -749,6 +755,20 @@ public class AnswerFragment extends Fragment
     FragmentUtils.checkParent(this, InCallScreenDelegateFactory.class);
   }
 
+  private int getMaxBrightnessMode(Context context) {
+    final String prefName = context.getPackageName() + "_preferences";
+    final SharedPreferences prefs = context.getSharedPreferences(prefName, context.MODE_MULTI_PROCESS);
+    try {
+      String value = prefs.getString(context.getString(R.string.max_brightness_on_incoming_call_mode_key), null);
+      if (value != null) {
+        return Integer.parseInt(value);
+      }
+    } catch (NumberFormatException e) {
+      // ignore and fall through
+    }
+    return 0;
+  }
+
   @Override
   public void onViewCreated(final View view, @Nullable Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
@@ -757,6 +777,18 @@ public class AnswerFragment extends Fragment
 
     if (savedInstanceState == null || !savedInstanceState.getBoolean(STATE_HAS_ANIMATED_ENTRY)) {
       ViewUtil.doOnGlobalLayout(view, this::animateEntry);
+    }
+
+    mNotificationManager = getContext().getSystemService(NotificationManager.class);
+    mDndMode = mNotificationManager.getCurrentInterruptionFilter();
+    int maxBrightnessMode = getMaxBrightnessMode(getContext());
+    shouldSetMaxBrightness = (maxBrightnessMode == 1 && mDndMode == mNotificationManager.INTERRUPTION_FILTER_ALL)
+        || maxBrightnessMode == 2;
+
+    if (shouldSetMaxBrightness) {
+      WindowManager.LayoutParams layoutParams = getActivity().getWindow().getAttributes();
+      layoutParams.screenBrightness = WindowManager.LayoutParams.BRIGHTNESS_OVERRIDE_FULL;
+      getActivity().getWindow().setAttributes(layoutParams);
     }
   }
 
@@ -924,6 +956,12 @@ public class AnswerFragment extends Fragment
       answerScreenDelegate.onAnswer(answerVideoAsAudio);
       buttonAcceptClicked = true;
     }
+
+    if (shouldSetMaxBrightness) {
+      WindowManager.LayoutParams layoutParams = getActivity().getWindow().getAttributes();
+      layoutParams.screenBrightness = WindowManager.LayoutParams.BRIGHTNESS_OVERRIDE_NONE;
+      getActivity().getWindow().setAttributes(layoutParams);
+    }
   }
 
   private void rejectCall() {
@@ -940,6 +978,12 @@ public class AnswerFragment extends Fragment
       }
       buttonRejectClicked = true;
       answerScreenDelegate.onReject();
+    }
+
+    if (shouldSetMaxBrightness) {
+      WindowManager.LayoutParams layoutParams = getActivity().getWindow().getAttributes();
+      layoutParams.screenBrightness = WindowManager.LayoutParams.BRIGHTNESS_OVERRIDE_NONE;
+      getActivity().getWindow().setAttributes(layoutParams);
     }
   }
 

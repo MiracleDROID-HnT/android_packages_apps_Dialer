@@ -38,4 +38,15 @@
         <item>@string/transparent_incallui_background_color</item>
     </string-array>
 
+    <string-array name="max_brightness_on_incoming_call_values" translatable="false">
+        <item>"0"</item>
+        <item>"1"</item>
+        <item>"2"</item>
+    </string-array>
+
+    <string-array name="max_brightness_on_incoming_call_entries" translatable="false">
+        <item>@string/max_brightness_on_incoming_call_disabled</item>
+        <item>@string/max_brightness_on_incoming_call_not_dnd</item>
+        <item>@string/max_brightness_on_incoming_call_always</item>
+    </string-array>
 </resources>
