@@ -50,4 +50,8 @@
     <string name="max_brightness_on_incoming_call_disabled">Wyłączone</string>
     <string name="max_brightness_on_incoming_call_not_dnd">Tylko wtedy, gdy telefon nie jest w trybie Nie przeszkadzać</string>
     <string name="max_brightness_on_incoming_call_always">Zawsze</string>
+
+    <string name="disable_proximity_sensor_title">Wyłącz czujnik zbliżeniowy</string>
+    <string name="disable_proximity_sensor_summary">Nie wyłączaj i włączaj ekranu podczas rozmów telefonicznych (w oparciu o czujnik zbliżeniowy)</string>
+    <string name="sensor_settings_titile">Czujniki urządzenia</string>
 </resources>
