@@ -72,7 +72,7 @@ public class SpeakerSettingsFragment extends PreferenceFragment
 
         mAutoAnswerDelay = (ListPreference) findPreference(AUTO_ANSWER_DELAY);
         int ansDelay = Settings.System.getInt(resolver,
-                Settings.System.AUTO_ANSWER_DELAY, 100);
+                Settings.System.AUTO_ANSWER_DELAY, 5000);
         mAutoAnswerDelay.setValue(String.valueOf(ansDelay));
         mAutoAnswerDelay.setOnPreferenceChangeListener(this);
         updateAnswerDelaySummary(ansDelay);
