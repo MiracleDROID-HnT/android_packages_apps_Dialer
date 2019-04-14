@@ -54,4 +54,24 @@
     <string name="disable_proximity_sensor_title">Wyłącz czujnik zbliżeniowy</string>
     <string name="disable_proximity_sensor_summary">Nie wyłączaj i włączaj ekranu podczas rozmów telefonicznych (w oparciu o czujnik zbliżeniowy)</string>
     <string name="sensor_settings_titile">Czujniki urządzenia</string>
+
+    <!-- Proximity speaker -->
+    <string name="speaker_settings_label">Zestw głośnomówiący</string>
+    <string name="prox_auto_speaker_title">Automatyczne rozmowy gośnomówiące</string>
+    <string name="prox_auto_speaker_summary">Włącz zestaw głośnomówiący automatycznie po odsunięciu telefonu od ucha</string>
+    <string name="prox_auto_speaker_delay_title">Opóźnienie</string>
+    <string name="prox_auto_speaker_delay_dialog_title">Opóźnienie głośnika w (ms)</string>
+    <string name="prox_auto_speaker_delay_summary">Zestaw głośnomówiący zostanie włączony w przeciągu <xliff:g id="number">%d</xliff:g> ms</string>
+    <string name="prox_auto_speaker_incall_only_title">Tylko podczas rozmowy</string>
+    <string name="prox_auto_speaker_incall_only_summary_on">W przypadku połączeń wychodzących słuchacz będzie słyszany dopiero po odebraniu przez niego telefonu</string>
+    <string name="prox_auto_speaker_incall_only_summary_off">Słuchacz będzie słyszalny podczas wszystkich stanów połączenia (domyślnie)</string>
+
+    <string name="prox_auto_answer_incall_only_title">Automatyczne odbieranie</string>
+    <string name="prox_auto_answer_incall_only_summary">Użyj czujnika zbliżeniowego do automatycznego odbierania połączeń</string>
+
+    <string name="auto_answer_call_title">Automatyczna odpowiedź</string>
+    <string name="auto_answer_call_summary">Korzystaj z automatycznego odbioru z podłączonym zestawem słuchawkowym lub przewodowym</string>
+    <string name="auto_answer_delay_title">Opóźnienie </string>
+    <string name="auto_answer_dialog_title">Opóźnienie automatycznej odpowiedzi w (ms)</string>
+    <string name="auto_answer_delay_summary">Automatyczna odpowiedź zostanie aktywowana w przeciągu <xliff:g id="number">%d</xliff:g> ms</string>
 </resources>
