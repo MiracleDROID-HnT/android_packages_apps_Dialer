@@ -56,8 +56,8 @@
     <string name="sensor_settings_titile">Czujniki urządzenia</string>
 
     <!-- Proximity speaker -->
-    <string name="speaker_settings_label">Zestw głośnomówiący</string>
-    <string name="prox_auto_speaker_title">Automatyczne rozmowy gośnomówiące</string>
+    <string name="speaker_settings_label">Zestaw głośnomówiący</string>
+    <string name="prox_auto_speaker_title">Automatyczne rozmowy głośnomówiące</string>
     <string name="prox_auto_speaker_summary">Włącz zestaw głośnomówiący automatycznie po odsunięciu telefonu od ucha</string>
     <string name="prox_auto_speaker_delay_title">Opóźnienie</string>
     <string name="prox_auto_speaker_delay_dialog_title">Opóźnienie głośnika w (ms)</string>
